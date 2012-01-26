@@ -1,6 +1,6 @@
 
-from mashup import reader
+from mashup.ItemLoader import ItemLoader
 
-print reader.walk('content')
+loader = ItemLoader('content')
 
 
