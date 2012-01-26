@@ -7,7 +7,7 @@ import yaml
 from yaml import YAMLError
 
 class ItemLoader(object):
-    
+
     def __init__(self, path):
         self.items = {}
         self.path = path
