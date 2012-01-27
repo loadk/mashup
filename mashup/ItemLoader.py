@@ -1,16 +1,15 @@
 # -*- coding: utf-8 -*-
 
 from __future__ import with_statement
-import codecs, os, re, sys
+import codecs, os, re
 
 import yaml
 from yaml import YAMLError
 
 class ItemLoader(object):
 
-    def __init__(self, path):
+    def __init__(self):
         self.items = {}
-        self.path = path
 
     @staticmethod
     def _has_yaml_header(filepath):
@@ -36,7 +35,7 @@ class ItemLoader(object):
         """
         try:
             with codecs.open(filepath, encoding='utf-8') as fd:
-                parts = re.split('^---+\s*\n', fd.read(), maxsplit=2, flags = re.M)
+                parts = re.split('^---+\s*\n', fd.read(), maxsplit=2, flags=re.M)
 
                 if len(parts) != 3:
                     raise ValueError("invalid item header: %s" % filepath)
@@ -100,14 +99,14 @@ class ItemLoader(object):
         """
         return ''.join(filename.split('.', 1)[1:]) or '.'
 
-    def load(self):
+    def load_items(self, dirpath):
         """
         Search dirpath recursively and gather all the items it contains.
 
         Return a dict, where the key is the file extension, and the value
         is a list of all the items in that section.
         """
-        for root, dirs, files in os.walk(self.path):
+        for root, dirs, files in os.walk(dirpath):
             for filename in files:
                 filepath = os.path.join(root, filename)
                 section = self._get_item_section(filename)
